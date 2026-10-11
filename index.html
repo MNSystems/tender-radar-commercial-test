@@ -3643,6 +3643,18 @@ function radarBuildTenderCard(item) {
 
   }
 
+  // Samruk detail links fail on a fresh page load; exact-number search works.
+  const samrukLotId = String(tender.source_lot_id || "").trim();
+  const samrukSearchLink =
+    tender.source_code === "samruk" && /^\d+$/.test(samrukLotId);
+
+  if (samrukSearchLink) {
+    tenderUrl =
+      "https://zakup.sk.kz/#/ext?tabs=lot&q=" +
+      encodeURIComponent(samrukLotId) +
+      "&adst=ALL&lst=ALL&page=1";
+  }
+
   if (
     !tenderUrl &&
     tender.public_url
@@ -3673,9 +3685,16 @@ function radarBuildTenderCard(item) {
       "noopener noreferrer";
 
     link.textContent =
-      "Открыть тендер";
+      samrukSearchLink ? "Найти лот на Самруке" : "Открыть тендер";
 
     actions.appendChild(link);
+
+    if (samrukSearchLink) {
+      const hint = document.createElement("span");
+      hint.className = "tender-field";
+      hint.textContent = "На Самруке нажмите на найденную карточку лота.";
+      actions.appendChild(hint);
+    }
 
   }
 
