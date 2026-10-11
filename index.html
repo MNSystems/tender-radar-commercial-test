@@ -1116,10 +1116,11 @@
 
 <div class="container">
 
+  <div id="sessionLoading" class="card login-card" role="status">Загружаем кабинет…</div>
   <div id="message"></div>
 
   <!-- ===== Gumroad license gate V2 ===== -->
-  <div id="licenseBlock" class="card login-card">
+  <div id="licenseBlock" class="card login-card" style="display:none">
 
     <h2>Доступ по лицензии Gumroad</h2>
 
@@ -6402,7 +6403,13 @@ async function init() {
 
 }
 
-init();
+init().catch((error) => {
+  console.error(error);
+  showLoginHome();
+  showError("Не удалось проверить сессию. Войдите повторно.");
+}).finally(() => {
+  document.getElementById("sessionLoading").style.display = "none";
+});
 
 </script>
 
