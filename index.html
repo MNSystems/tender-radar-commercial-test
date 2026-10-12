@@ -1850,7 +1850,7 @@
           </div>
         </div>
 
-        <p class="radar-period-help"><strong>Фильтр по сроку подачи заявок:</strong> здесь отображаются тендеры, у которых приём заявок заканчивается сегодня, в ближайшие 3 или 7 дней. Часы радара — UTC+6; сроки Госзакуп отображаются по времени официального портала.</p>
+        <p class="radar-period-help"><strong>Фильтр по сроку подачи заявок:</strong> здесь отображаются тендеры, у которых приём заявок заканчивается сегодня, в ближайшие 3 или 7 дней. Часы радара — UTC+6; сроки Госзакуп и Самрука отображаются по времени официальных порталов (UTC+5).</p>
         <div class="radar-results-note" id="radarKzClock" aria-live="off">Время Казахстана: —</div>
         <div class="radar-periods">
           <button class="radar-filter-btn active" data-radar-period="all" onclick="radarSetPeriod('all')">Все</button>
@@ -2686,7 +2686,7 @@ function radarUpdateKazakhstanClock() {
   el.textContent = "Время радара (UTC+6): " +
     pad(nowKz.getUTCDate()) + "." + pad(nowKz.getUTCMonth() + 1) + "." +
     nowKz.getUTCFullYear() + ", " + pad(nowKz.getUTCHours()) + ":" +
-    pad(nowKz.getUTCMinutes()) + ". Сроки Госзакуп показаны по времени официального портала.";
+    pad(nowKz.getUTCMinutes()) + ". Сроки Госзакуп и Самрука показаны по времени официальных порталов (UTC+5).";
 }
 
 // Каждую минуту удаляем из текущего списка истекшие сроки без F5.
@@ -3405,7 +3405,7 @@ function radarBuildTenderCard(item) {
     ],
     [
       "Срок подачи",
-      tender.source_code === "goszakup"
+      (tender.source_code === "goszakup" || tender.source_code === "samruk")
         ? formatGoszakupDateTime(
             tender.expires_at
           )
