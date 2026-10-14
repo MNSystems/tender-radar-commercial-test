@@ -58,6 +58,14 @@ Deno.serve(async (request) => {
     if (!Number.isFinite(ageMs) || ageMs < 0 || ageMs > 10 * 60 * 1000)
       return response(409, "Initial search window has expired");
 
+    // Atomic single-use reservation: simultaneous requests cannot enqueue duplicates.
+    // Migration must be applied before deploying this function.
+    const { data: claimed, error: claimError } = await admin.rpc("claim_initial_search", {
+      p_profile_id: profileId,
+    });
+    if (claimError) return response(503, "Initial search reservation unavailable");
+    if (claimed !== true) return response(409, "Initial search already requested");
+
     const gh = await fetch(
       "https://api.github.com/repos/MNSystems/tender-radar-commercial/actions/workflows/initial-client-search.yml/dispatches",
       {
