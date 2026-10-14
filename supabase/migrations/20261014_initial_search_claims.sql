@@ -26,3 +26,18 @@ end
 $$;
 revoke all on function commercial.claim_initial_search(bigint) from public, anon, authenticated;
 grant execute on function commercial.claim_initial_search(bigint) to service_role;
+
+-- Release a reservation only when a GitHub dispatch failed.
+-- Service-role-only: never callable directly from the public client.
+create or replace function commercial.release_initial_search(p_profile_id bigint)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  delete from commercial.initial_search_claims where profile_id = p_profile_id;
+end
+$$;
+revoke all on function commercial.release_initial_search(bigint) from public, anon, authenticated;
+grant execute on function commercial.release_initial_search(bigint) to service_role;
