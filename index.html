@@ -5444,9 +5444,34 @@ async function createProfile() {
       "—"
     );
 
-  showSuccess(
-    "Профиль поиска создан. Теперь его можно редактировать."
-  );
+  // Request a bounded first search only after the profile was saved.
+  // Failure to queue must never roll back or hide the newly created profile.
+  showInfo("Профиль создан. Запускаем поиск тендеров по вашим ключевым словам...");
+  try {
+    const { data: initialSearch, error: initialError } =
+      await db.functions.invoke("initial-client-search", {
+        body: { profile_id: data.id }
+      });
+
+    if (initialError || !initialSearch ||
+        initialSearch.message !== "Initial search queued") {
+      showInfo(
+        "Профиль сохранён. Первичный поиск пока не запущен. " +
+        "Результаты появятся после очередного автоматического обновления."
+      );
+    } else {
+      showSuccess(
+        "Профиль создан. Первичный поиск запущен; " +
+        "подходящие тендеры появятся после обработки."
+      );
+    }
+  } catch (err) {
+    showInfo(
+      "Профиль сохранён. Первичный поиск пока недоступен; " +
+      "система продолжит регулярное обновление."
+    );
+  }
+
 
 }
 
