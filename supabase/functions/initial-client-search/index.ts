@@ -50,8 +50,8 @@ Deno.serve(async (request) => {
     if (profileError || !profile || !profile.active ||
         !memberships.some(m => m.client_id === profile.client_id))
       return response(403, "Profile not accessible");
-    if (!(profile.sources || []).includes("goszakup"))
-      return response(400, "Profile does not include Goszakup");
+    if (!(profile.sources || []).some(s => s === "goszakup" || s === "samruk"))
+      return response(400, "Profile does not include a supported source");
 
     // Staging safety: only newly created profiles, not arbitrary repeated historical searches.
     const ageMs = Date.now() - Date.parse(profile.created_at);
@@ -77,7 +77,7 @@ Deno.serve(async (request) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ref: "feature/initial-search-20261014",
+          ref: "main",
           inputs: { profile_id: String(profileId), apply: "true" },
         }),
       },
