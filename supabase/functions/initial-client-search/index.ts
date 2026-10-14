@@ -82,7 +82,11 @@ Deno.serve(async (request) => {
         }),
       },
     );
-    if (!gh.ok) return response(502, "Initial search could not be queued");
+    if (!gh.ok) {
+      // A rejected dispatch must not permanently block this profile.
+      await admin.rpc("release_initial_search", { p_profile_id: profileId });
+      return response(502, "Initial search could not be queued");
+    }
     return response(202, "Initial search queued");
   } catch {
     return response(500, "Initial search request failed");
