@@ -78,7 +78,7 @@ Deno.serve(async (request) => {
         },
         body: JSON.stringify({
           ref: "feature/initial-search-20261014",
-          inputs: { profile_id: String(profileId) },
+          inputs: { profile_id: String(profileId), apply: "true" },
         }),
       },
     );
