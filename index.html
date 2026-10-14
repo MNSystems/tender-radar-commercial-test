@@ -1678,6 +1678,11 @@
           <strong>Источники:</strong>
         </p>
         <div id="profileSources"></div>
+        <div style="margin-top:16px">
+          <button class="secondary" id="initialSearchRetryButton" onclick="requestInitialSearchForExistingProfile()">
+            Запустить первичный поиск
+          </button>
+        </div>
 
         <div id="emptyProfileBox" class="empty-profile">
           <p>
@@ -5473,6 +5478,30 @@ async function createProfile() {
   }
 
 
+}
+
+async function requestInitialSearchForExistingProfile() {
+  if (!currentProfileId || !accessIsActive()) {
+    showError("Профиль поиска или активный доступ не найден.");
+    return;
+  }
+  const button = document.getElementById("initialSearchRetryButton");
+  if (button) button.disabled = true;
+  showInfo("Запрашиваем первичный поиск на Госзакупе и Самрук-Казына...");
+  try {
+    const { data, error } = await sb.functions.invoke("initial-client-search", {
+      body: { profile_id: currentProfileId }
+    });
+    if (error || !data || data.message !== "Initial search queued") {
+      showError("Поиск пока не удалось запустить. Не создавайте новый профиль. Сообщите об ошибке.");
+    } else {
+      showSuccess("Первичный поиск запущен. Обработка источников займёт несколько минут. Обновите кабинет позже.");
+    }
+  } catch (_) {
+    showError("Не удалось отправить запрос на поиск. Профиль сохранён.");
+  } finally {
+    if (button) button.disabled = false;
+  }
 }
 
 
