@@ -5449,7 +5449,7 @@ async function createProfile() {
   showInfo("Профиль создан. Запускаем поиск тендеров по вашим ключевым словам...");
   try {
     const { data: initialSearch, error: initialError } =
-      await db.functions.invoke("initial-client-search", {
+      await sb.functions.invoke("initial-client-search", {
         body: { profile_id: data.id }
       });
 
