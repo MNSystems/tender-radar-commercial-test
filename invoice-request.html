@@ -1,22 +1,39 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Получить счёт — Tender Radar KZ</title>
-<style>*{box-sizing:border-box}body{margin:0;background:#eff5fa;color:#17314d;font:19px/1.5 Arial,sans-serif}header{background:linear-gradient(115deg,#153a62,#146d94);padding:30px 20px;color:white}header>div,main{max-width:800px;margin:auto}h1{font-size:34px;margin:0}header p{margin:6px 0 0}main{padding:30px 18px}.card{background:white;border-radius:16px;padding:30px;box-shadow:0 8px 25px #19355016}h2{font-size:27px;margin:0 0 15px}label{display:block;font-weight:bold;margin:16px 0}input{display:block;width:100%;margin-top:7px;border-radius:8px;border:1px solid #94a9bd;padding:13px;font:inherit}button{font:600 19px Arial;background:#096b76;color:white;border:0;border-radius:9px;padding:17px 20px;cursor:pointer}button:disabled{opacity:.65}a{color:#095e82}.price{font-weight:bold;font-size:25px}aside{border-left:5px solid #bb8000;background:#fff2d7;padding:15px;margin:20px 0}#result{display:none}#status{font-weight:bold}footer{font-size:15px;margin-top:20px;color:#53687d}@media(max-width:600px){h1{font-size:28px}.card{padding:20px}}</style></head>
+<style>*{box-sizing:border-box}body{margin:0;background:#eff5fa;color:#17314d;font:19px/1.5 Arial,sans-serif}header{background:linear-gradient(115deg,#153a62,#146d94);padding:30px 20px;color:white}header>div,main{max-width:800px;margin:auto}h1{font-size:34px;margin:0}header p{margin:6px 0 0}main{padding:30px 18px}.card{background:white;border-radius:16px;padding:30px;box-shadow:0 8px 25px #19355016}h2{font-size:27px;margin:0 0 15px}label{display:block;font-weight:bold;margin:16px 0}input{display:block;width:100%;margin-top:7px;border-radius:8px;border:1px solid #94a9bd;padding:13px;font:inherit}button{font:600 19px Arial;background:#096b76;color:white;border:0;border-radius:9px;padding:17px 20px;cursor:pointer}button:disabled{opacity:.65}a{color:#095e82}.price{font-weight:bold;font-size:25px}aside{border-left:5px solid #bb8000;background:#fff2d7;padding:15px;margin:20px 0}#result{display:none}#status{font-weight:bold}footer{font-size:15px;margin-top:20px;color:#53687d}@media(max-width:600px){h1{font-size:28px}.card{padding:20px}}#paper{display:none}.paper-top{text-align:right}.danger{font-weight:bold;color:#ae2020}#docSeller>div{margin:4px 0}#paper table{border-collapse:collapse;width:100%;margin-top:20px}#paper td,#paper th{border:1px solid #777;text-align:left;padding:8px}
+@media print{@page{size:A4;margin:14mm}body{background:white;color:#111;font:12pt Arial}header,main>aside,main>.card,main>footer{display:none!important}main{padding:0;max-width:unset}#paper{display:block!important;width:180mm;margin:0 auto}#paper h2{font-size:20pt}#paper h3{font-size:15pt;margin:22px 0 8px}#docSeller>div{margin:7px 0;break-inside:avoid}}
+</style></head>
 <body><header><div><h1>Tender Radar KZ</h1><p>Получить счёт на оплату</p></div></header>
 <main><aside><b>Проверочный режим.</b> Эта страница уже создаёт счета, но пока не предназначена для настоящих платежей. Банковские реквизиты проходят окончательную сверку.</aside>
-<section class="card" id="formCard"><h2>Доступ на 30 дней</h2><p class="price">39 000 ₸</p><p>Введите данные вашей компании. По ним сформируется заявка на счёт, которую увидит администратор Tender Radar KZ.</p>
+<section class="card" id="formCard"><h2>Доступ на 30 дней</h2><p class="price">39 000 ₸</p><p>Введите данные вашей компании. Сразу после отправки формы откроется ваш счёт, который можно распечатать или сохранить в PDF.</p>
 <form id="request"><label>Название компании или ИП<input id="company" required minlength="2" maxlength="150" autocomplete="organization" placeholder="Например: ТОО Альфа"></label>
 <label>БИН / ИИН (если есть)<input id="bin" maxlength="20" inputmode="numeric" placeholder="БИН или ИИН"></label>
 <label>Email для связи и регистрации в Tender Radar<input id="email" type="email" required maxlength="200" autocomplete="email" placeholder="company@example.kz"></label>
-<button id="submit" type="submit">Оформить счёт на 39 000 ₸</button></form>
+<button id="submit" type="submit">Получить счёт на 39 000 ₸</button></form>
 <p id="status" role="status"></p></section>
-<section class="card" id="result"><h2>Заявка на счёт создана</h2><p>Номер счёта: <strong id="number"></strong></p><p>Компания: <strong id="buyer"></strong></p><p>Сумма: <strong>39 000 ₸</strong> за 30 дней</p><p>Заявка появилась в административном списке счетов.</p><p><b>Не перечисляйте деньги по тестовому счёту.</b> После проверки реквизитов здесь появится возможность получить готовый счёт PDF.</p><p>После подтверждённой оплаты доступ активируется для email, указанного в заявке. Клиенту не нужен ключ Gumroad.</p><a href="https://mnsystems.github.io/tender-radar-kz/">Перейти в Tender Radar KZ</a></section>
+<section class="card" id="result"><h2>Ваш счёт готов</h2><p>Счёт № <strong id="number"></strong> сформирован. Он также появился у администратора.</p>
+<p><button type="button" id="print">Печать / Сохранить PDF</button></p>
+<p><b>Следующий шаг:</b> после поступления денежных средств администратор подтвердит оплату и система активирует ваш доступ на 30 дней. Отдельный ключ Gumroad не нужен: лицензия будет привязана к указанному email.</p>
+<p><b>Сейчас проверочный режим:</b> банковские реквизиты ещё не подтверждены — не перечисляйте деньги по данному образцу.</p>
+<p><a href="https://mnsystems.github.io/tender-radar-kz/">Регистрация и вход в Tender Radar KZ</a></p></section>
+<div id="paper"><div class="paper-top">Tender Radar KZ — Счёт на оплату</div><h2>СЧЁТ № <span id="docNumber"></span></h2><p>Дата: <span id="docDate"></span></p><p class="danger">ОБРАЗЕЦ — НЕ ОПЛАЧИВАТЬ. Банковские реквизиты не подтверждены.</p>
+<h3>Поставщик</h3><div id="docSeller"></div>
+<h3>Покупатель</h3><div id="docBuyer"></div>
+<table><thead><tr><th>Наименование</th><th>Количество</th><th>Стоимость</th></tr></thead><tbody><tr><td>Доступ к Tender Radar KZ Commercial на 30 дней</td><td>1</td><td>39 000 ₸</td></tr></tbody></table>
+<h2>Итого к оплате: 39 000 ₸</h2><p>Назначение платежа: оплата доступа Tender Radar KZ по счёту.</p>
+<p>Доступ активируется после подтверждения фактического поступления оплаты.</p></div>
 <footer>Вход в кабинет после оплаты — по email и паролю. Действующие клиенты Gumroad продолжают пользоваться обычным входом.</footer></main>
 <script>
 const $=id=>document.getElementById(id);
+$('print').onclick=()=>window.print();
 $('request').addEventListener('submit',async e=>{
 e.preventDefault();$('submit').disabled=true;$('status').textContent='Создаём счёт...';
 try{const r=await fetch('https://fjbbvmtfnypaaffkvbzo.supabase.co/functions/v1/invoice-customer-request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({company:$('company').value.trim(),bin:$('bin').value.trim(),email:$('email').value.trim()})});const v=await r.json();if(!r.ok)throw Error(v.error==='REQUEST_LIMIT_REACHED'?'Для этого email достигнут лимит заявок. Повторите завтра.':'Не удалось создать счёт. Попробуйте позже.');
-$('number').textContent=v.invoice.number;$('buyer').textContent=v.invoice.company;$('formCard').style.display='none';$('result').style.display='block';}catch(err){$('status').textContent=err.message;$('submit').disabled=false;}
+$('number').textContent=v.invoice.number;$('docNumber').textContent=v.invoice.number;
+$('docDate').textContent=new Date(v.invoice.created_at).toLocaleDateString('ru-RU');
+const seller=v.seller||{};const lines=[seller.seller_name,'ИИН / БИН: '+(seller.business_id||'—'),seller.address,'Банк: '+seller.bank_name,'БИК: '+seller.bank_bik,'ИИК: '+seller.account_iik,'КБе: '+seller.kbe,'КНП: '+seller.knp];const area=$('docSeller');area.replaceChildren();for(const line of lines){const x=document.createElement('div');x.textContent=line;area.appendChild(x)}
+$('docBuyer').textContent=v.invoice.company+' · '+v.invoice.email+' · БИН/ИИН: '+($('bin').value.trim()||'—');
+$('formCard').style.display='none';$('result').style.display='block';}catch(err){$('status').textContent=err.message;$('submit').disabled=false;}
 });
 </script></body></html>
