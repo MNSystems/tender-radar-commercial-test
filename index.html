@@ -4269,8 +4269,8 @@ function normalizeMatchedKeywords(value) {
 function accessIsActive() {
   const c = currentClient;
   const expiry = Date.parse(c?.expires_at || "");
-  return Boolean(c && c.payment_status === "active" && c.payment_provider === "gumroad" &&
-    c.license_verified_at && c.license_key_hash && Number.isFinite(expiry) && expiry > Date.now() &&
+  return Boolean(c && c.payment_status === "active" && ( (c.payment_provider === "gumroad" && c.license_verified_at && c.license_key_hash) ||
+      (c.payment_provider === "bank_invoice" && c.license_verified_at) ) && Number.isFinite(expiry) && expiry > Date.now() &&
     !["blocked", "suspended", "disabled"].includes(c.status));
 }
 
