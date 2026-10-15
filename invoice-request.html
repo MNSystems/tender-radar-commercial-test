@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Получить счёт — Tender Radar KZ</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#eff5fa;color:#17314d;font:19px/1.5 Arial,sans-serif}header{background:linear-gradient(115deg,#153a62,#146d94);padding:30px 20px;color:white}header>div,main{max-width:800px;margin:auto}h1{font-size:34px;margin:0}header p{margin:6px 0 0}main{padding:30px 18px}.card{background:white;border-radius:16px;padding:30px;box-shadow:0 8px 25px #19355016}h2{font-size:27px;margin:0 0 15px}label{display:block;font-weight:bold;margin:16px 0}input{display:block;width:100%;margin-top:7px;border-radius:8px;border:1px solid #94a9bd;padding:13px;font:inherit}button{font:600 19px Arial;background:#096b76;color:white;border:0;border-radius:9px;padding:17px 20px;cursor:pointer}button:disabled{opacity:.65}a{color:#095e82}.price{font-weight:bold;font-size:25px}aside{border-left:5px solid #bb8000;background:#fff2d7;padding:15px;margin:20px 0}#result{display:none}#status{font-weight:bold}footer{font-size:15px;margin-top:20px;color:#53687d}@media(max-width:600px){h1{font-size:28px}.card{padding:20px}}</style></head>
+<body><header><div><h1>Tender Radar KZ</h1><p>Получить счёт на оплату</p></div></header>
+<main><aside><b>Проверочный режим.</b> Эта страница уже создаёт счета, но пока не предназначена для настоящих платежей. Банковские реквизиты проходят окончательную сверку.</aside>
+<section class="card" id="formCard"><h2>Доступ на 30 дней</h2><p class="price">39 000 ₸</p><p>Введите данные вашей компании. По ним сформируется заявка на счёт, которую увидит администратор Tender Radar KZ.</p>
+<form id="request"><label>Название компании или ИП<input id="company" required minlength="2" maxlength="150" autocomplete="organization" placeholder="Например: ТОО Альфа"></label>
+<label>БИН / ИИН (если есть)<input id="bin" maxlength="20" inputmode="numeric" placeholder="БИН или ИИН"></label>
+<label>Email для связи и регистрации в Tender Radar<input id="email" type="email" required maxlength="200" autocomplete="email" placeholder="company@example.kz"></label>
+<button id="submit" type="submit">Оформить счёт на 39 000 ₸</button></form>
+<p id="status" role="status"></p></section>
+<section class="card" id="result"><h2>Заявка на счёт создана</h2><p>Номер счёта: <strong id="number"></strong></p><p>Компания: <strong id="buyer"></strong></p><p>Сумма: <strong>39 000 ₸</strong> за 30 дней</p><p>Заявка появилась в административном списке счетов.</p><p><b>Не перечисляйте деньги по тестовому счёту.</b> После проверки реквизитов здесь появится возможность получить готовый счёт PDF.</p><p>После подтверждённой оплаты доступ активируется для email, указанного в заявке. Клиенту не нужен ключ Gumroad.</p><a href="https://mnsystems.github.io/tender-radar-kz/">Перейти в Tender Radar KZ</a></section>
+<footer>Вход в кабинет после оплаты — по email и паролю. Действующие клиенты Gumroad продолжают пользоваться обычным входом.</footer></main>
+<script>
+const $=id=>document.getElementById(id);
+$('request').addEventListener('submit',async e=>{
+e.preventDefault();$('submit').disabled=true;$('status').textContent='Создаём счёт...';
+try{const r=await fetch('https://fjbbvmtfnypaaffkvbzo.supabase.co/functions/v1/invoice-customer-request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({company:$('company').value.trim(),bin:$('bin').value.trim(),email:$('email').value.trim()})});const v=await r.json();if(!r.ok)throw Error(v.error==='REQUEST_LIMIT_REACHED'?'Для этого email достигнут лимит заявок. Повторите завтра.':'Не удалось создать счёт. Попробуйте позже.');
+$('number').textContent=v.invoice.number;$('buyer').textContent=v.invoice.company;$('formCard').style.display='none';$('result').style.display='block';}catch(err){$('status').textContent=err.message;$('submit').disabled=false;}
+});
+</script></body></html>
