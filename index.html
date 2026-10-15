@@ -4269,8 +4269,8 @@ function normalizeMatchedKeywords(value) {
 function accessIsActive() {
   const c = currentClient;
   const expiry = Date.parse(c?.expires_at || "");
-  return Boolean(c && c.payment_status === "active" && c.payment_provider === "gumroad" &&
-    c.license_verified_at && c.license_key_hash && Number.isFinite(expiry) && expiry > Date.now() &&
+  return Boolean(c && c.payment_status === "active" && ((c.payment_provider === "gumroad" && c.license_verified_at && c.license_key_hash) ||
+      (c.payment_provider === "bank_invoice" && c.license_verified_at)) && Number.isFinite(expiry) && expiry > Date.now() &&
     !["blocked", "suspended", "disabled"].includes(c.status));
 }
 
@@ -5837,6 +5837,13 @@ async function submitFeedback() {
 async function openCabinet(user) {
 
   try {
+    // Bank licenses are claimed only for a previously confirmed invoice matching this user's verified email.
+    try {
+      const {error: bankClaimError} = await db.rpc("bank_invoice_claim_paid");
+      if (bankClaimError) console.warn("Bank license claim:",bankClaimError.message);
+    } catch (bankClaimError) {
+      console.warn("Bank license claim unavailable:",bankClaimError);
+    }
 
     showInfo(
       "Загружаем кабинет..."
@@ -5915,8 +5922,8 @@ async function openCabinet(user) {
 
       showError(
         expired
-          ? "Срок оплаченного доступа истёк. Для продления активируйте новую лицензию Gumroad."
-          : "Лицензия не привязана или доступ не активен. Выполните первичную активацию Gumroad."
+          ? "Срок оплаченного доступа истёк. Для продления оплатите новый счёт или активируйте лицензию Gumroad."
+          : "Доступ пока не активирован. Если вы оплатили банковский счёт, проверьте подтверждение оплаты и email регистрации."
       );
 
       return;
