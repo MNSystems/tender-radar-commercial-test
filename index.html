@@ -5837,6 +5837,14 @@ async function submitFeedback() {
 async function openCabinet(user) {
 
   try {
+    // Claim only a previously bank-verified invoice matching this authenticated, email-verified user.
+    // Existing Gumroad sessions are not changed by the database function.
+    try {
+      const {error: claimError} = await db.rpc("bank_invoice_claim_paid");
+      if (claimError) console.warn("Bank payment claim:",claimError.message);
+    } catch (claimError) {
+      console.warn("Bank payment claim unavailable:",claimError);
+    }
 
     showInfo(
       "Загружаем кабинет..."
@@ -5915,8 +5923,8 @@ async function openCabinet(user) {
 
       showError(
         expired
-          ? "Срок оплаченного доступа истёк. Для продления активируйте новую лицензию Gumroad."
-          : "Лицензия не привязана или доступ не активен. Выполните первичную активацию Gumroad."
+          ? "Срок оплаченного доступа истёк. Для продления оплатите новый счёт или активируйте лицензию Gumroad."
+          : "Доступ пока не активирован. Если вы оплатили банковский счёт, проверьте подтверждение оплаты и email регистрации."
       );
 
       return;
