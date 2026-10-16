@@ -21,7 +21,7 @@
 <h3>Поставщик</h3><div id="docSeller"></div>
 <h3>Покупатель</h3><div id="docBuyer"></div>
 <table><thead><tr><th>Наименование</th><th>Количество</th><th>Стоимость</th></tr></thead><tbody><tr><td>Доступ к Tender Radar KZ Commercial на 30 дней</td><td>1</td><td>39 000 ₸</td></tr></tbody></table>
-<h2>Итого к оплате: 39 000 ₸</h2><p>Назначение платежа: оплата доступа Tender Radar KZ по счёту.</p>
+<h2>Итого к оплате: 39 000 ₸</h2><p id="purpose">Назначение платежа: оплата доступа Tender Radar KZ по счёту.</p>
 <p>Доступ активируется после подтверждения фактического поступления оплаты.</p></div>
 <footer>Вход в кабинет после оплаты — по email и паролю. Действующие клиенты Gumroad продолжают пользоваться обычным входом.</footer></main>
 <script>
@@ -30,7 +30,7 @@ $('print').onclick=()=>window.print();
 $('request').addEventListener('submit',async e=>{
 e.preventDefault();$('submit').disabled=true;$('status').textContent='Создаём счёт...';
 try{const r=await fetch('https://fjbbvmtfnypaaffkvbzo.supabase.co/functions/v1/invoice-customer-request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({company:$('company').value.trim(),bin:$('bin').value.trim(),email:$('email').value.trim()})});const v=await r.json();if(!r.ok)throw Error(v.error==='REQUEST_LIMIT_REACHED'?'Для этого email достигнут лимит заявок. Повторите завтра.':'Не удалось создать счёт. Попробуйте позже.');
-$('number').textContent=v.invoice.number;$('docNumber').textContent=v.invoice.number;
+$('number').textContent=v.invoice.number;$('purpose').textContent='Назначение платежа: доступ Tender Radar KZ по счёту № '+v.invoice.number+'.';$('docNumber').textContent=v.invoice.number;
 $('docDate').textContent=new Date(v.invoice.created_at).toLocaleDateString('ru-RU');
 const seller=v.seller||{};const lines=[seller.seller_name,'ИИН / БИН: '+(seller.business_id||'—'),seller.address,'Банк: '+seller.bank_name,'БИК: '+seller.bank_bik,'ИИК: '+seller.account_iik,'КБе: '+seller.kbe,'КНП: '+seller.knp];const area=$('docSeller');area.replaceChildren();for(const line of lines){const x=document.createElement('div');x.textContent=line;area.appendChild(x)}
 $('docBuyer').textContent=v.invoice.company+' · '+v.invoice.email+' · БИН/ИИН: '+($('bin').value.trim()||'—');
