@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тендерный радар Казахстана — Tender Radar KZ</title>
+<meta name="description" content="Автоматический поиск тендеров на Госзакупе и Самрук-Казына. Тендеры по вашему профилю — в личном кабинете и в Telegram.">
+<meta property="og:title" content="Тендерный радар Казахстана">
+<meta property="og:description" content="Система регулярно отслеживает закупки на Госзакупе и Самрук-Казына и показывает подходящие тендеры в личном кабинете.">
+<meta property="og:image" content="https://public-files.gumroad.com/xy1m220zo0eg6gh1pgx4dcr89j20">
+<meta property="og:type" content="website">
+<style>
+:root{--ink:#0a1830;--muted:#5a6b82;--line:#e3e8ef;--bg:#ffffff;--soft:#f5f8fb;--accent:#14b8a6;--accent-d:#0d8f81}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Roboto,Arial,sans-serif;font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+h1{font-size:clamp(36px,6vw,64px);line-height:1.05;margin:0 0 20px;font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(28px,4vw,40px);line-height:1.15;margin:0 0 16px;font-weight:800}
+h3{font-size:20px;margin:0 0 6px}
+p{margin:0 0 14px}
+.lead{font-size:20px;color:#2b3b52;max-width:620px}
+.btn{display:inline-block;text-decoration:none;text-transform:uppercase;letter-spacing:.14em;font-size:13px;font-weight:700;padding:16px 26px;border:1.5px solid var(--ink);border-radius:2px;cursor:pointer;text-align:center;transition:.15s}
+.btn.primary{background:var(--ink);color:#fff}
+.btn.primary:hover{background:#16345f}
+.btn.ghost{background:#fff;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+.btn.sm{padding:11px 16px;font-size:12px;letter-spacing:.1em}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.brand{font-size:13px;font-weight:800;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;white-space:nowrap}
+.brand span{color:var(--accent)}
+.hbtns{display:flex;gap:8px}
+.hero{padding:96px 0 72px;text-align:center}
+.hero .lead{margin:0 auto 32px}
+.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.hint{margin-top:18px;font-size:14px;color:var(--muted)}
+.shot{margin:48px auto 0;max-width:900px;border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 20px 50px rgba(10,24,48,.12)}
+section{padding:72px 0}
+section.soft{background:var(--soft)}
+.center{text-align:center}
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:26px}
+.num{font-size:13px;letter-spacing:.2em;color:var(--accent-d);font-weight:800;margin-bottom:10px}
+.card p{color:#3a4b63;margin:0;font-size:17px}
+.shots{grid-template-columns:repeat(3,1fr)}
+.shots img{border:1px solid var(--line);border-radius:8px;width:100%;background:var(--soft);min-height:120px}
+.price{font-size:44px;font-weight:800;margin:6px 0 4px}
+.price small{font-size:18px;font-weight:600;color:var(--muted)}
+.pay{max-width:860px;margin:36px auto 0}
+.pay .card{display:flex;flex-direction:column;text-align:left;border-width:1.5px}
+.pay .card.hl{border-color:var(--ink)}
+.pay .btn{margin-top:auto}
+.pay .card p{margin-bottom:18px}
+.pill{display:inline-block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--accent-d);border:1px solid var(--accent);border-radius:20px;padding:3px 10px;margin-bottom:12px;align-self:flex-start}
+.note{font-size:14px;color:var(--muted);text-align:center;margin-top:20px}
+.tags{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.tags span{border:1px solid var(--line);background:#fff;border-radius:30px;padding:8px 18px;font-size:16px}
+footer{border-top:1px solid var(--line);padding:32px 0;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+@media(max-width:820px){
+ .g3,.g4,.shots{grid-template-columns:repeat(2,1fr)}
+ .hero{padding:64px 0 48px}
+ section{padding:52px 0}
+}
+@media(max-width:560px){
+ body{font-size:17px}
+ .g2,.g3,.g4,.shots{grid-template-columns:1fr}
+ .brand{letter-spacing:.18em;font-size:12px}
+ .btn.sm{padding:10px 11px;font-size:11px;letter-spacing:.04em}
+ .btn{width:100%}
+ .hbtns .btn{width:auto}
+ .cta{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top">Tender Radar <span>KZ</span></a>
+    <div class="hbtns">
+      <a class="btn sm ghost" href="https://kvantor.gumroad.com/l/radar">По карте</a>
+      <a class="btn sm primary" href="https://mnsystems.github.io/tender-radar-kz/invoice-request.html">Получить счёт</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Автоматический поиск тендеров в Казахстане</p>
+    <h1>Тендерный радар Казахстана</h1>
+    <p class="lead">Система регулярно отслеживает закупки на Госзакупе и Самрук-Казына, отбирает тендеры по вашему профилю и показывает их в личном кабинете.</p>
+    <div class="cta">
+      <a class="btn primary" href="#pay">Получить доступ</a>
+      <a class="btn ghost" href="#how">Как это работает ↓</a>
+    </div>
+    <p class="hint">Доступ по карте — сразу. Для компаний Казахстана — по счёту.</p>
+    <div class="shot"><img src="https://public-files.gumroad.com/xy1m220zo0eg6gh1pgx4dcr89j20" alt="Тендерный радар Казахстана — интерфейс"></div>
+  </div>
+</div>
+
+<section class="soft">
+  <div class="wrap center">
+    <p class="eyebrow">Источники</p>
+    <h2>Два основных источника — в одном сервисе</h2>
+    <div class="grid g2" style="margin-top:28px;text-align:left">
+      <div class="card"><h3>Госзакуп Казахстана</h3><p>Государственные закупки: лоты, заказчики, суммы и сроки.</p></div>
+      <div class="card"><h3>Самрук-Казына</h3><p>Закупки квазигосударственного сектора и компаний холдинга.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="center"><p class="eyebrow">Вы получаете</p><h2>Всё, чтобы вовремя увидеть нужный тендер</h2></div>
+    <div class="grid g3" style="margin-top:32px">
+      <div class="card"><div class="num">01</div><h3>Персональный профиль</h3><p>Поиск по вашим товарам и услугам: ключевые слова и слова-исключения.</p></div>
+      <div class="card"><div class="num">02</div><h3>Автоматический отбор</h3><p>Подходящие тендеры отбираются сами, без ручного просмотра площадок.</p></div>
+      <div class="card"><div class="num">03</div><h3>Полные данные</h3><p>Заказчик, сумма, сроки и предмет закупки — в одном месте.</p></div>
+      <div class="card"><div class="num">04</div><h3>Прямые ссылки</h3><p>Переход к исходному тендеру в один клик.</p></div>
+      <div class="card"><div class="num">05</div><h3>Уведомления в Telegram</h3><p>Новые подходящие тендеры приходят вам в мессенджер.</p></div>
+      <div class="card"><div class="num">06</div><h3>Личный кабинет</h3><p>Ваша персональная подборка тендеров всегда под рукой.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap center">
+    <p class="eyebrow">Интерфейс</p>
+    <h2>Как выглядит сервис</h2>
+    <div class="grid shots" style="margin-top:28px">
+      <img loading="lazy" src="https://public-files.gumroad.com/02hn1nbee4wyyscksx941v8u7np2" alt="Tender Radar KZ — скриншот 1">
+      <img loading="lazy" src="https://public-files.gumroad.com/o5lrni38fyu7j18e0xsmhiywzysl" alt="Tender Radar KZ — скриншот 2">
+      <img loading="lazy" src="https://public-files.gumroad.com/nisb0n9bcynysue44kvwa5pcboj3" alt="Tender Radar KZ — скриншот 3">
+      <img loading="lazy" src="https://public-files.gumroad.com/7ljbvydrpj2t07sm6vn92g5ptluf" alt="Tender Radar KZ — скриншот 4">
+      <img loading="lazy" src="https://public-files.gumroad.com/fdvkd5aea1qp8rdo9gymx5tq2xlu" alt="Tender Radar KZ — скриншот 5">
+      <img loading="lazy" src="https://public-files.gumroad.com/1q0wkfhasve40limhlh19wws602h" alt="Tender Radar KZ — скриншот 6">
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="center"><p class="eyebrow">Как это работает</p><h2>Четыре шага до первого тендера</h2></div>
+    <div class="grid g4" style="margin-top:32px">
+      <div class="card"><div class="num">1</div><h3>Регистрация</h3><p>Вход в личный кабинет по email и паролю.</p></div>
+      <div class="card"><div class="num">2</div><h3>Профиль</h3><p>Укажите, что вы поставляете, и источники поиска.</p></div>
+      <div class="card"><div class="num">3</div><h3>Поиск</h3><p>Система регулярно проверяет площадки сама.</p></div>
+      <div class="card"><div class="num">4</div><h3>Результаты</h3><p>Подходящие тендеры в кабинете и в Telegram.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap center">
+    <p class="eyebrow">Простая математика</p>
+    <h2>Один найденный вовремя тендер окупает доступ</h2>
+    <p class="lead" style="margin:0 auto">Ручной просмотр площадок съедает часы каждый месяц. Радар делает эту работу за вас — вы только решаете, участвовать или нет.</p>
+    <div class="tags" style="margin-top:26px">
+      <span>Поставщики</span><span>Подрядчики</span><span>Сервисные компании</span><span>Новые участники</span>
+    </div>
+  </div>
+</section>
+
+<section id="pay">
+  <div class="wrap center">
+    <p class="eyebrow">Начните сейчас</p>
+    <h2>Как получить доступ</h2>
+    <p class="lead" style="margin:0 auto">Два способа на выбор. Доступ предоставляется на 30 дней.</p>
+    <div class="grid g2 pay">
+      <div class="card hl">
+        <span class="pill">Сразу</span>
+        <h3>Доступ по карте</h3>
+        <div class="price">$79 <small>/ 30 дней</small></div>
+        <p>Доступ сразу после оплаты. Лицензионный ключ придёт на email от Gumroad. Принимаются международные карты.</p>
+        <a class="btn primary" href="https://kvantor.gumroad.com/l/radar">Доступ по карте</a>
+      </div>
+      <div class="card">
+        <span class="pill">Для Казахстана</span>
+        <h3>Доступ по счёту</h3>
+        <div class="price">39 000 ₸ <small>/ 30 дней</small></div>
+        <p>Для компаний и ИП Казахстана. Получите счёт за минуту и оплатите с расчётного счёта. Доступ откроется после подтверждения оплаты.</p>
+        <a class="btn ghost" href="https://mnsystems.github.io/tender-radar-kz/invoice-request.html">Получить счёт</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Доступ предоставляется на 30 дней.</span>
+    <span>Tender Radar KZ © 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>
